@@ -1,3 +1,26 @@
 from django.db import models
+from django.core.validators import int_list_validator
 
-# Create your models here.
+class Vote(models.Model):
+    title = models.CharField(max_length=250)
+    description = models.CharField(max_length=2500)
+    start_date = models.DateTimeField('Voting Starts')
+    end_date = models.DateTimeField('Voting Ends')
+
+    def __str__(self):
+        return self.title
+
+class VoteChoice(models.Model):
+    vote = models.ForeignKey(Vote, on_delete=models.CASCADE)
+    index = models.PositiveIntegerField()
+    choice_text = models.CharField(max_length=250)
+
+    def __str__(self):
+        return self.vote.title + " - " + self.choice_text
+
+class Ballot(models.Model):
+    vote = models.ForeignKey(Vote, on_delete=models.CASCADE)
+    choices = models.CharField(validators=[int_list_validator], max_length=250)
+
+    def __str__(self):
+        return self.vote.title + " - Ballot"
