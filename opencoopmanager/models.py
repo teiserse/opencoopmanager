@@ -24,3 +24,16 @@ class Ballot(models.Model):
 
     def __str__(self):
         return self.vote.title + " - Ballot"
+
+    """
+    This method creates a new Ballot from the ballot being defined as a dict:
+        ballot[preference] = index of vote choice
+    """
+    @classmethod
+    def create(cls, vote, ballot):
+        selection = ""
+        for pref in range(1, vote.votechoice_set.count() + 1):
+            selection = selection + str(ballot[pref])
+            if not pref == vote.votechoice_set.count():
+                selection = selection + ","
+        return cls(vote=vote, choices=selection)
