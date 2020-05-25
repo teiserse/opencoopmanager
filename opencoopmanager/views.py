@@ -1,18 +1,22 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 from .models import Vote, VoteChoice, Ballot
 
+@login_required
 def index(request):
     vote_list = Vote.objects.order_by('start_date')
     context = {'vote_list': vote_list}
     return render(request, 'opencoopmanager/index.html', context)
 
+@login_required
 def votemain(request, vote_id):
     vote = get_object_or_404(Vote, pk=vote_id)
     return render(request, 'opencoopmanager/votemain.html', {'vote': vote})
 
+@login_required
 def sendballot(request, vote_id):
     vote = get_object_or_404(Vote, pk=vote_id)
     ballot = {}
