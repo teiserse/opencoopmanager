@@ -1,3 +1,7 @@
+{% extends "opencoopmanager/base.html" %}
+
+{% block content %}
+
 {% if vote_list %}
     <ul>
     {% for vote in vote_list %}
@@ -7,3 +11,5 @@
 {% else %}
     <p>No votes are currently ongoing.</p>
 {% endif %}
+
+{% endblock content %}

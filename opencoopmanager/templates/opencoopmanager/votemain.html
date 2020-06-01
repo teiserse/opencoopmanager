@@ -1,6 +1,10 @@
+{% extends "opencoopmanager/base.html" %}
+
+{% block content %}
+
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-<h1>{{ vote.title }}</h1>
+<h2>{{ vote.title }}</h2>
 
 {{ vote.description }}
 
@@ -13,3 +17,5 @@
 {% endfor %}
 <input type="submit" value="Submit">
 </form>
+
+{% endblock content %}
