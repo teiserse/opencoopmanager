@@ -1,11 +1,16 @@
 from django.db import models
 from django.core.validators import int_list_validator
+from django.contrib.auth.models import User
 
 class Vote(models.Model):
     title = models.CharField(max_length=250)
     description = models.CharField(max_length=2500)
     start_date = models.DateTimeField('Voting Starts')
     end_date = models.DateTimeField('Voting Ends')
+    elligible_voters = models.ManyToManyField(User, related_name="can_vote_in",
+            default=[u.pk for u in User.objects.all()])
+    remaining_voters = models.ManyToManyField(User, related_name="not_voted_in",
+            default=[u.pk for u in User.objects.all()])
 
     def __str__(self):
         return self.title
